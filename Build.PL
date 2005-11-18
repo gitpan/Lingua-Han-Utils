@@ -9,6 +9,7 @@ my $builder = Module::Build->new(
     dist_version_from   => 'lib/Lingua/Han/Utils.pm',
     build_requires => {
         'Test::More' => 0,
+        'Encode::Guess' => 0,
     },
 );
 

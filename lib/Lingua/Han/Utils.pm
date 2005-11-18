@@ -4,8 +4,8 @@ use warnings;
 use strict;
 use base 'Exporter';
 use vars qw/$VERSION @EXPORT_OK/;
-$VERSION = '0.01';
-@EXPORT_OK = qw/Unihan_value csplit cdecode csubstr/;
+$VERSION = '0.02';
+@EXPORT_OK = qw/Unihan_value csplit cdecode csubstr clength/;
 
 use Encode;
 use Encode::Guess qw/euc-cn/;
@@ -44,13 +44,19 @@ sub csubstr {
 	return wantarray?@words:(join('', @words));
 }
 
+sub clength {
+	my $word = shift;
+	my @words = csplit($word);
+	return scalar @words;
+}
+
 =head1 NAME
 
 Lingua::Han::Utils - The utility tools of Chinese character(HanZi)
 
 =head1 SYNOPSIS
 
-    use Lingua::Han::Utils qw/Unihan_value csplit cdecode csubstr/;
+    use Lingua::Han::Utils qw/Unihan_value csplit cdecode csubstr clength/;
     
     # cdecode
     # the same as decode('euc-cn', $word) in ASCII editing mode
@@ -76,6 +82,12 @@ Lingua::Han::Utils - The utility tools of Chinese character(HanZi)
     my $words = "我爱你啊";
     my @words = csubstr($words, 1, 2); # return ("爱", "你")
     my @words = csubstr($words, 1); # return ("爱", "你", "啊")
+    my $words = csubstr($words, 1, 2); # 爱你
+    
+    # clength
+    # treat the Chinese character as one
+    my $words = "我爱你";
+    print clength($words); # 3
 
 =head1 EXPORT
 
@@ -99,11 +111,15 @@ split the Chinese characters into an array, English words can be mixed in.
 
 =item csubstr(WORD, OFFSET, LENGTH)
 
-treat the Chinese characters as one word, substr it. 
+treat the Chinese character as one word, substr it. 
 
 (BE CAFEFUL! it's NOT lvalue, we cann't use csubstr($word, 2, 3) = $REPLACEMENT)
 
 if no LENGTH is specified, substr form OFFSET to END.
+
+=item clength
+
+treat the Chinese character as one word(length 1).
 
 =back
 
