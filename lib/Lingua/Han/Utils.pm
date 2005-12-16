@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use base 'Exporter';
 use vars qw/$VERSION @EXPORT_OK/;
-$VERSION = '0.04';
+$VERSION = '0.05';
 @EXPORT_OK = qw/Unihan_value csplit cdecode csubstr clength/;
 
 use Encode;
@@ -13,8 +13,13 @@ use Encode::Guess qw/euc-cn/;
 sub cdecode {
 	my $word = shift;
 	my $enc = Encode::Guess->guess($word);
-	die $! unless ref($enc);
-	$word = decode($enc->name, $word);
+	my $encoding;
+	unless (ref($enc)) {
+		$encoding = 'euc-cn'; # use 'enc-cn' by default
+	} else {
+		$encoding = $enc->name;
+	}
+	$word = decode($encoding, $word);
 	return $word;
 }
 
@@ -51,6 +56,10 @@ sub clength {
 	my @words = csplit($word);
 	return scalar @words;
 }
+
+1;
+__END__
+=encoding utf8
 
 =head1 NAME
 
@@ -179,7 +188,3 @@ Copyright 2005 Fayland Lam, all rights reserved.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
-=cut
-
-1; # End of Lingua::Han::Utils
