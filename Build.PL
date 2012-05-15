@@ -10,7 +10,12 @@ my $builder = Module::Build->new(
     create_makefile_pl  => 'traditional',
     build_requires => {
         'Test::More' => 0,
-        'Encode::Guess' => 0,
+        'Encode::Detect::CJK' => 0,
+    },
+    meta_merge     => {
+        resources => {
+            repository => 'http://github.com/fayland/perl-lingua-han/tree/master',
+        }
     },
 );
 
