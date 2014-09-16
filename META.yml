@@ -1,23 +1,24 @@
 ---
-abstract: unknown
+abstract: 'The utility tools of Chinese character(HanZi)'
 author:
-  - unknown
+  - 'Fayland Lam <fayland@gmail.com>'
 build_requires:
-  ExtUtils::MakeMaker: 0
+  Encode::Detect::CJK: 0
+  Test::More: 0
 configure_requires:
-  ExtUtils::MakeMaker: 0
+  Module::Build: 0.42
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.112150'
-license: unknown
+generated_by: 'Module::Build version 0.4203, CPAN::Meta::Converter version 2.133380'
+license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Lingua-Han-Utils
-no_index:
-  directory:
-    - t
-    - inc
-requires:
-  Encode::Detect::CJK: 0
-  Test::More: 0
-version: 0.12
+provides:
+  Lingua::Han::Utils:
+    file: lib/Lingua/Han/Utils.pm
+    version: 0.13
+resources:
+  license: http://dev.perl.org/licenses/
+  repository: http://github.com/fayland/perl-lingua-han/tree/master
+version: 0.13
